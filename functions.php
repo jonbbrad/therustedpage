@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TRP_VERSION', '1.3.0' );
+define( 'TRP_VERSION', '1.3.1' );
 define( 'TRP_DIR', get_template_directory() );
 define( 'TRP_URI', get_template_directory_uri() );
 
@@ -26,7 +26,7 @@ function trp_setup() {
 	) );
 	add_theme_support( 'custom-background', array(
 		'default-color'      => '0a0a0a',
-		'default-image'      => get_template_directory_uri() . '/assets/images/bg-texture.png',
+		'default-image'      => get_template_directory_uri() . '/assets/images/bg-texture.jpg',
 		'default-size'       => 'cover',
 		'default-attachment' => 'fixed',
 	) );
