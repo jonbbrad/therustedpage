@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TRP_VERSION', '1.3.4' );
+define( 'TRP_VERSION', '1.3.5' );
 define( 'TRP_DIR', get_template_directory() );
 define( 'TRP_URI', get_template_directory_uri() );
 
