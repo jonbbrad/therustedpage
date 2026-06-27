@@ -100,11 +100,6 @@ function trp_fix_theme_directory_name( $source, $remote_source, $upgrader, $hook
 	if ( ! isset( $hook_extra['theme'] ) || 'therustedpage' !== $hook_extra['theme'] ) {
 		return $source;
 	}
-
-	// Log the source path for debugging
-	error_log( 'TRP updater source: ' . $source );
-	error_log( 'TRP updater remote_source: ' . $remote_source );
-
 	return $source;
 }
 add_filter( 'upgrader_source_selection', 'trp_fix_theme_directory_name', 10, 4 );
