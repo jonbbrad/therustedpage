@@ -101,15 +101,9 @@ function trp_fix_theme_directory_name( $source, $remote_source, $upgrader, $hook
 		return $source;
 	}
 
-	if ( basename( untrailingslashit( $source ) ) === 'therustedpage' ) {
-		return $source;
-	}
-
-	$correct = trailingslashit( trailingslashit( $remote_source ) . 'therustedpage' );
-	global $wp_filesystem;
-	if ( $wp_filesystem->move( $source, $correct ) ) {
-		return $correct;
-	}
+	// Log the source path for debugging
+	error_log( 'TRP updater source: ' . $source );
+	error_log( 'TRP updater remote_source: ' . $remote_source );
 
 	return $source;
 }
