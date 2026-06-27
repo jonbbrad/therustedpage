@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TRP_VERSION', '1.6.1' );
+define( 'TRP_VERSION', '1.6.2' );
 define( 'TRP_DIR', get_template_directory() );
 define( 'TRP_URI', get_template_directory_uri() );
 
@@ -318,9 +318,16 @@ add_action( 'save_post', 'trp_save_display_options_meta' );
 require TRP_DIR . '/inc/customizer.php';
 
 /* --------------------------------------------------------------------------
-   GitHub-based auto-updater
+   GitHub-based auto-updater (manual only — no auto-updates)
    -------------------------------------------------------------------------- */
 require TRP_DIR . '/inc/updater.php';
+
+add_filter( 'auto_update_theme', function ( $update, $item ) {
+	if ( isset( $item->theme ) && 'therustedpage' === $item->theme ) {
+		return false;
+	}
+	return $update;
+}, 10, 2 );
 
 /* --------------------------------------------------------------------------
    Template Tag: posted-on meta
