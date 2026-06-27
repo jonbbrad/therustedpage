@@ -61,6 +61,19 @@
 			</div>
 		<?php endif; ?>
 
+		<?php $social_links = trp_get_social_links(); ?>
+		<?php if ( ! empty( $social_links ) ) : ?>
+			<div class="footer-social" aria-label="<?php esc_attr_e( 'Social media links', 'therustedpage' ); ?>">
+				<?php foreach ( $social_links as $network => $url ) : ?>
+					<a href="<?php echo esc_url( $url ); ?>" class="social-icon social-icon--<?php echo esc_attr( $network ); ?>"
+					   <?php echo 'email' !== $network ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
+					   aria-label="<?php echo esc_attr( ucfirst( $network ) ); ?>">
+						<?php echo trp_social_icon( $network ); ?>
+					</a>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+
 		<div class="site-info">
 			<div class="copyright">
 				<?php if ( $footer_text ) : ?>

@@ -252,6 +252,41 @@ function trp_customizer_register( $wp_customize ) {
 	) );
 
 	/* -----------------------------------------------------------------------
+	   Section: Social Media Links
+	   ----------------------------------------------------------------------- */
+	$wp_customize->add_section( 'trp_social_section', array(
+		'title'       => __( 'Social Media Links', 'therustedpage' ),
+		'description' => __( 'Enter your profile URLs — icons appear automatically in the footer. Leave blank to hide.', 'therustedpage' ),
+		'priority'    => 138,
+	) );
+
+	$social_networks = array(
+		'facebook'  => __( 'Facebook URL', 'therustedpage' ),
+		'instagram' => __( 'Instagram URL', 'therustedpage' ),
+		'x'         => __( 'Twitter / X URL', 'therustedpage' ),
+		'youtube'   => __( 'YouTube URL', 'therustedpage' ),
+		'tiktok'    => __( 'TikTok URL', 'therustedpage' ),
+		'spotify'   => __( 'Spotify URL', 'therustedpage' ),
+		'discord'   => __( 'Discord URL', 'therustedpage' ),
+		'reddit'    => __( 'Reddit URL', 'therustedpage' ),
+		'linkedin'  => __( 'LinkedIn URL', 'therustedpage' ),
+		'pinterest' => __( 'Pinterest URL', 'therustedpage' ),
+		'email'     => __( 'Email address', 'therustedpage' ),
+	);
+
+	foreach ( $social_networks as $slug => $label ) {
+		$wp_customize->add_setting( 'trp_social_' . $slug, array(
+			'default'           => '',
+			'sanitize_callback' => 'email' === $slug ? 'sanitize_email' : 'esc_url_raw',
+		) );
+		$wp_customize->add_control( 'trp_social_' . $slug, array(
+			'label'   => $label,
+			'section' => 'trp_social_section',
+			'type'    => 'email' === $slug ? 'email' : 'url',
+		) );
+	}
+
+	/* -----------------------------------------------------------------------
 	   Section: Footer
 	   ----------------------------------------------------------------------- */
 	$wp_customize->add_section( 'trp_footer_section', array(
