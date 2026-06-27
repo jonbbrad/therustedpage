@@ -3,7 +3,7 @@ Theme Name:  The Rusted Page
 Theme URI:
 Author:
 Description: Industrial Gothic Punk Rock dark theme. Sticky header with logo left / nav right, hero slider, single-column content, up to 3-column footer. Fully responsive.
-Version:     1.6.0
+Version:     1.6.1
 License:     GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: therustedpage
@@ -28,7 +28,7 @@ Tags:        dark, one-column, custom-logo, custom-menu, featured-images, footer
   --color-purple:      #ba68c8;   /* purple — tertiary accent */
   --color-purple-dark: #7b1fa2;
   --color-steel:       #4a5058;
-  --color-text:        #d4d4d4;
+  --color-text:        #bcbbbb;
   --color-text-muted:  #7a7a7a;
   --color-heading:     #efefef;
 
