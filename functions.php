@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TRP_VERSION', '1.5.0' );
+define( 'TRP_VERSION', '1.6.0' );
 define( 'TRP_DIR', get_template_directory() );
 define( 'TRP_URI', get_template_directory_uri() );
 
@@ -97,10 +97,12 @@ add_action( 'widgets_init', 'trp_widgets_init' );
    Scripts & Styles
    -------------------------------------------------------------------------- */
 function trp_scripts() {
-	// Google Fonts — Bebas Neue (headings), Oswald (sub/nav), Lato (body)
+	// Google Fonts — Bebas Neue (headings), Oswald (sub/nav), body font from Customizer
+	$body_font = get_theme_mod( 'trp_body_font', 'Chakra Petch' );
+	$body_slug = str_replace( ' ', '+', $body_font );
 	wp_enqueue_style(
 		'trp-fonts',
-		'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Lato:ital,wght@0,400;0,700;1,400&display=swap',
+		'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=' . $body_slug . ':ital,wght@0,400;0,700;1,400&display=swap',
 		array(),
 		null
 	);

@@ -10,6 +10,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 function trp_customizer_register( $wp_customize ) {
 
 	/* -----------------------------------------------------------------------
+	   Section: Typography
+	   ----------------------------------------------------------------------- */
+	$wp_customize->add_section( 'trp_typography_section', array(
+		'title'    => __( 'Typography', 'therustedpage' ),
+		'priority' => 42,
+	) );
+
+	$wp_customize->add_setting( 'trp_body_font', array(
+		'default'           => 'Chakra Petch',
+		'sanitize_callback' => 'trp_sanitize_body_font',
+	) );
+	$wp_customize->add_control( 'trp_body_font', array(
+		'label'   => __( 'Body font', 'therustedpage' ),
+		'section' => 'trp_typography_section',
+		'type'    => 'select',
+		'choices' => array(
+			'Chakra Petch'   => 'Chakra Petch — angular industrial',
+			'Barlow'         => 'Barlow — industrial geometric',
+			'IBM Plex Sans'  => 'IBM Plex Sans — industrial heritage',
+			'Titillium Web'  => 'Titillium Web — tech industrial',
+			'Exo 2'          => 'Exo 2 — futuristic geometric',
+			'Rajdhani'       => 'Rajdhani — angular condensed',
+			'Nunito Sans'    => 'Nunito Sans — rounded humanist',
+			'Archivo'        => 'Archivo — sharp grotesque',
+			'Kanit'          => 'Kanit — geometric edge',
+			'Jura'           => 'Jura — light futuristic',
+			'Orbitron'       => 'Orbitron — bold sci-fi',
+			'Inconsolata'    => 'Inconsolata — monospace punk',
+			'Lato'           => 'Lato — clean neutral',
+		),
+	) );
+
+	/* -----------------------------------------------------------------------
 	   Panel: Hero
 	   ----------------------------------------------------------------------- */
 	$wp_customize->add_panel( 'trp_hero_panel', array(
@@ -343,6 +376,14 @@ add_action( 'customize_register', 'trp_customizer_register' );
 /* --------------------------------------------------------------------------
    Sanitize callbacks
    -------------------------------------------------------------------------- */
+function trp_sanitize_body_font( $value ) {
+	$valid = array(
+		'Chakra Petch', 'Barlow', 'IBM Plex Sans', 'Titillium Web',
+		'Exo 2', 'Rajdhani', 'Nunito Sans', 'Archivo', 'Kanit',
+		'Jura', 'Orbitron', 'Inconsolata', 'Lato',
+	);
+	return in_array( $value, $valid, true ) ? $value : 'Chakra Petch';
+}
 function trp_sanitize_hero_mode( $value ) {
 	return in_array( $value, array( 'static', 'slider', 'random', 'none' ), true ) ? $value : 'slider';
 }
@@ -365,21 +406,33 @@ function trp_sanitize_hero_position( $value ) {
    Inline CSS — accent color override
    -------------------------------------------------------------------------- */
 function trp_customizer_css() {
-	$accent = get_theme_mod( 'trp_accent_color', '#00838f' );
-	if ( '#00838f' === strtolower( $accent ) ) {
-		return; // Default — no extra CSS needed
+	$accent    = get_theme_mod( 'trp_accent_color', '#00838f' );
+	$body_font = get_theme_mod( 'trp_body_font', 'Chakra Petch' );
+
+	$has_accent = ( '#00838f' !== strtolower( $accent ) );
+	$has_font   = ( 'Chakra Petch' !== $body_font );
+
+	if ( ! $has_accent && ! $has_font ) {
+		return;
 	}
-	$dark  = trp_adjust_brightness( $accent, -48 );
-	$light = trp_adjust_brightness( $accent, +28 );
-	?>
-	<style id="trp-accent-css">
-	:root {
-		--color-rust:       <?php echo esc_attr( $accent ); ?>;
-		--color-rust-dark:  <?php echo esc_attr( $dark ); ?>;
-		--color-rust-light: <?php echo esc_attr( $light ); ?>;
+
+	$fallback = ( 'Inconsolata' === $body_font ) ? ', monospace' : ", 'Helvetica Neue', Helvetica, Arial, sans-serif";
+
+	echo '<style id="trp-customizer-css">' . "\n:root {\n";
+
+	if ( $has_accent ) {
+		$dark  = trp_adjust_brightness( $accent, -48 );
+		$light = trp_adjust_brightness( $accent, +28 );
+		echo "\t--color-rust:       " . esc_attr( $accent ) . ";\n";
+		echo "\t--color-rust-dark:  " . esc_attr( $dark )   . ";\n";
+		echo "\t--color-rust-light: " . esc_attr( $light )  . ";\n";
 	}
-	</style>
-	<?php
+
+	if ( $has_font ) {
+		echo "\t--font-body: '" . esc_attr( $body_font ) . "'" . $fallback . ";\n";
+	}
+
+	echo "}\n</style>\n";
 }
 add_action( 'wp_head', 'trp_customizer_css' );
 
