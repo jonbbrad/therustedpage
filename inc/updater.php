@@ -101,12 +101,14 @@ function trp_fix_theme_directory_name( $source, $remote_source, $upgrader, $hook
 		return $source;
 	}
 
-	$correct = trailingslashit( $remote_source ) . 'therustedpage';
-	if ( $source !== $correct && is_dir( $source ) ) {
-		global $wp_filesystem;
-		if ( $wp_filesystem->move( $source, $correct ) ) {
-			return $correct;
-		}
+	if ( basename( untrailingslashit( $source ) ) === 'therustedpage' ) {
+		return $source;
+	}
+
+	$correct = trailingslashit( trailingslashit( $remote_source ) . 'therustedpage' );
+	global $wp_filesystem;
+	if ( $wp_filesystem->move( $source, $correct ) ) {
+		return $correct;
 	}
 
 	return $source;
